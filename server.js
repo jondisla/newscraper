@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const hbs = require("express-handlebars");
 const path = require("path");
+const mongoose = require('mongoose');
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://admin:admin1@ds261460.mlab.com:61460/heroku_20nf9px7";
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
