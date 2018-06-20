@@ -1,0 +1,31 @@
+body {
+    background: url("https://www.publicdomainpictures.net/pictures/140000/velka/vintage-newspaper-print.jpg") fixed;
+}
+
+.buttonStyle {
+    background: #65412D;
+    color: white;
+}
+
+.jumbotron {
+    background: #F0DFCE;
+}
+
+.container {
+    bottom: 920px;
+}
+
+.more {
+    text-align: center;
+}
+
+.success {
+    background: whitesmoke;
+}
+
+#loading img {
+    z-index: -1;
+    position: absolute;
+    width: 8%;
+    text-align: center;
+}
