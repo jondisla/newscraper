@@ -18,7 +18,7 @@ var cheerio = require("cheerio");
 // Require all models
 var db = require("./models");
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3003;
 
 // Configure middleware
 
@@ -146,17 +146,17 @@ app.post("/articles/:id", function (req, res) {
     });
 });
 
-// app.delete('/articles/:id', function (req, res) {
-//   db.Article.deleteOne({
-//     _id: req.params.id
-//   })
-// }, function (err) {
-//   if (err) {
-//     console.log(err)
-//   } else {
-//     return res.send("Removed");
-//   }
-// });
+app.delete('/articles/:id', function (req, res) {
+  db.Article.deleteOne({
+    _id: req.params.id
+  })
+}, function (err) {
+  if (err) {
+    console.log(err)
+  } else {
+    return res.send("Removed");
+  }
+});
 
 
 app.listen(PORT, () => {
