@@ -5,6 +5,17 @@ body {
 .buttonStyle {
     background: #65412D;
     color: white;
+    margin-left: 50%;
+    display: inline-block;
+}
+
+.buttonStyleEdit {
+    background: #65412D;
+    color: white;
+    position: absolute;
+    /* margin-top: 20px; */
+    margin-left: 60%;
+    padding: 7px 16px 7px 16px;
 }
 
 .jumbotron {
@@ -26,6 +37,40 @@ body {
 #loading img {
     z-index: -1;
     position: absolute;
+    margin-top: 10%;
+    margin-left: 28%;
     width: 8%;
     text-align: center;
+}
+
+#notes {
+    position: absolute;
+    top: 50%;
+    float: right;
+    width: 30%;
+    display: none;
+    margin-left: 30%;
+    background: #654331;
+    color: white;
+}
+
+textarea,
+input {
+    display: block;
+    width: 100%;
+    background-color: white;
+}
+
+input {
+    height: 36px;
+    font-size: 24px;
+}
+
+textarea {
+    height: 200px;
+    font-size: 18px;
+}
+
+.trash {
+    color: red;
 }

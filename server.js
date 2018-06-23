@@ -7,7 +7,7 @@ const path = require("path");
 const mongoose = require('mongoose');
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://admin:admin1@ds261460.mlab.com:61460/heroku_20nf9px7";
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
+
 
 // Our scraping tools
 // Axios is a promised-based http library, similar to jQuery's Ajax method
@@ -31,7 +31,10 @@ app.use(bodyParser.urlencoded({
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
-// app.set("views", path.join(__dirname, "views"));
+// Connect to the Mongo DB
+mongoose.connect(MONGODB_URI);
+
+// Routes handlebars
 
 app.engine(
   "handlebars",
@@ -46,8 +49,6 @@ app.get("/", function (req, res) {
   res.render("home");
 });
 
-// Connect to the Mongo DB
-mongoose.connect(MONGODB_URI);
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function (req, res) {
@@ -59,6 +60,7 @@ app.get("/scrape", function (req, res) {
 
     // Now, we grab every h2 within an article tag, and do the following:
     $("article h2").each(function (i, element) {
+
       // Save an empty result object
       var result = {};
 
@@ -66,9 +68,6 @@ app.get("/scrape", function (req, res) {
       result.title = $(this)
         .children("a")
         .text();
-      result.description = $(this)
-        .children("a")
-        .attr("li");
       result.link = $(this)
         .children("a")
         .attr("href");
@@ -89,11 +88,10 @@ app.get("/scrape", function (req, res) {
     res.send('<body style="background:#F0DECD"><center><h1>Articles Have Been Stored<br><a href="/" style="pointer:cursor;color:white; text-decoration:none;"><button type="button" style="font-size:20px;border-radius:8px;background:#2169BC;color:white;padding:20px;">' + "View new articles" + '</button></a></center></body>');
   });
 });
-
 // Route for getting all Articles from the db
 app.get("/articles", function (req, res) {
   // Grab every document in the Articles collection
-  db.Article.find({})
+  db.Article.find()
     .then(function (dbArticle) {
       // If we were able to successfully find Articles, send them back to the client
       res.json(dbArticle);
@@ -147,6 +145,19 @@ app.post("/articles/:id", function (req, res) {
       res.json(err);
     });
 });
+
+// app.delete('/articles/:id', function (req, res) {
+//   db.Article.deleteOne({
+//     _id: req.params.id
+//   })
+// }, function (err) {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     return res.send("Removed");
+//   }
+// });
+
 
 app.listen(PORT, () => {
   console.log("Listening port: " + PORT);

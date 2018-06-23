@@ -1,19 +1,19 @@
 // Grab the articles as a json
 $.getJSON("/articles", function (data) {
     // For each one
-    for (var i = 1; i < data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         // Display the apropos information on the page
-        $("#articles").append('<div class="container"><div class="card gutter"><div class="card-body "><h4 class="card-title">' + data[i].title + '</h4><br/><p class="card-text ">' + data[i].description + '</p><p class="more"><a class="btn  btn-md buttonStyle" href=' + data[i].link + '>Read More</a></p></div></div></div>');
+        $("#articles").append('<div class="container"><div class="card gutter"><div class="card-body "><h4 class="card-title">' + data[i].title + '</h4><br/><div class="card-text ">' + data[i].link + '</div><p class="btn notes btn-md buttonStyleEdit" data-id = ' + data[i]._id + '>Add Note</p><a class="btn more btn-md buttonStyle" href=' + data[i].link + '>Read More</a></p><i class="far fa-trash-alt trash"></i></div></div></div>');
+
     }
 });
-
-
 
 
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function () {
     // Empty the notes from the note section
-    $("#notes").empty();
+    $("#notes").empty().toggle();
+    $('#articles').hide('blind');
     // Save the id from the p tag
     var thisId = $(this).attr("data-id");
 
@@ -34,6 +34,10 @@ $(document).on("click", "p", function () {
             // A button to submit a new note, with the id of the article saved to it
             $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
+            $('#savenote').click(function () {
+                $('#notes').hide();
+                $('#articles').show('blind');
+            });
             // If there's a note in the article
             if (data.note) {
                 // Place the title of the note in the title input
@@ -46,6 +50,7 @@ $(document).on("click", "p", function () {
 
 // When you click the savenote button
 $(document).on("click", "#savenote", function () {
+
     // Grab the id associated with the article from the submit button
     var thisId = $(this).attr("data-id");
 
@@ -71,9 +76,4 @@ $(document).on("click", "#savenote", function () {
     // Also, remove the values entered in the input and textarea for note entry
     $("#titleinput").val("");
     $("#bodyinput").val("");
-});
-
-$('.scrapeBtn').submit((e) => {
-    e.preventDefault();
-    alert('hello');
 });
